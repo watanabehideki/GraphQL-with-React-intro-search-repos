@@ -1,17 +1,8 @@
 import React from "react";
 import { ApolloProvider } from "react-apollo"; // コンポーネント間のコミュニケーションを成立させる為のコンポーネント
-import { gql } from "graphql-tag"; // GraphQLのqueryにparseする為のヘルパー
 import { Query } from "react-apollo"; // GraphQLのqueryを送信する為のコンポーネント
 import client from "./client";
-
-const ME = gql`
-  query me {
-    user(login: "iteachonudemy") {
-      name
-      avatarUrl
-    }
-  }
-`;
+import { ME } from "./graphql";
 
 function App() {
   return (
