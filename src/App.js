@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { ApolloProvider } from "react-apollo"; // コンポーネント間のコミュニケーションを成立させる為のコンポーネント
 import { Query } from "react-apollo"; // GraphQLのqueryを送信する為のコンポーネント
 import client from "./client";
-import { ME } from "./graphql";
+import { SEARCH_REPOSITORIES } from "./graphql";
+
+const VARIABLES = {
+  first: 5,
+  after: null,
+  last: null,
+  before: null,
+  query: "frontend",
+};
 
 function App() {
+  const [variables, setVariables] = useState(VARIABLES);
+  const { query, first, last, before, after } = variables;
   return (
     <ApolloProvider client={client}>
-      <div className="App">Hello GraphQL</div>
-      <Query query={ME}>
+      <Query
+        query={SEARCH_REPOSITORIES}
+        variables={{ query, first, last, before, after }}
+      >
         {({ loading, error, data }) => {
           if (loading) return "Loading...";
           if (error) return `Error ${error.message}`;
-
-          return <div>{data.user.name}</div>;
+          console.log({ data });
+          return <div></div>;
         }}
       </Query>
     </ApolloProvider>
