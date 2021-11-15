@@ -15,14 +15,14 @@ const DEFALUT_STATE = {
 function App() {
   const [variables, setVariables] = useState(DEFALUT_STATE);
   const { query, first, last, before, after } = variables;
-  console.log({query})
+  console.log({ query });
 
   const handleChange = (event) => {
-    setVariables({...DEFALUT_STATE, query: event.target.value}) // DEFALUT_STATEのqueryのみを更新
-  }
+    setVariables({ ...DEFALUT_STATE, query: event.target.value }); // DEFALUT_STATEのqueryのみを更新
+  };
   const handleSubmit = (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   return (
     <ApolloProvider client={client}>
@@ -36,8 +36,12 @@ function App() {
         {({ loading, error, data }) => {
           if (loading) return "Loading...";
           if (error) return `Error ${error.message}`;
-          console.log({ data });
-          return <div></div>;
+          const search = data.search;
+          const repositoryCount = search.repositoryCount;
+          const repositoryUnit =
+            repositoryCount === 1 ? "Repository" : "Repositories";
+          const title = `Github Repositories 検索結果 - ${repositoryCount} ${repositoryUnit}`;
+          return <h2>{title}</h2>;
         }}
       </Query>
     </ApolloProvider>
