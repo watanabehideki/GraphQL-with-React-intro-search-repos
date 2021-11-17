@@ -35,6 +35,15 @@ function App() {
     })
   }
 
+  const goPrevious = (search) => {
+    setVariables({
+      first: PER_PAGE,
+      after: null,
+      before: search.pageInfo.startCursor,
+      query: query,
+    })
+  }
+
   return (
     <ApolloProvider client={client}>
       <form onSubmit={(event) => handleSubmit(event)}>
@@ -71,6 +80,9 @@ function App() {
                   )
                 })}
               </ul>
+              {search.pageInfo.hasPreviousPage ? (
+                <button onClick={() => goPrevious(search)}>Previous</button>
+              ) : null}
               {search.pageInfo.hasNextPage ? (
                 <button onClick={() => goNext(search)}>Next</button>
               ) : null}
