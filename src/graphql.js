@@ -1,4 +1,4 @@
-import { gql } from "graphql-tag"; // GraphQLのqueryにparseする為のヘルパー
+import { gql } from "graphql-tag" // GraphQLのqueryにparseする為のヘルパー
 
 export const SEARCH_REPOSITORIES = gql`
   query searchRepositories(
@@ -39,7 +39,7 @@ export const SEARCH_REPOSITORIES = gql`
       }
     }
   }
-`;
+`
 
 export const ME = gql`
   query me {
@@ -48,4 +48,4 @@ export const ME = gql`
       avatarUrl
     }
   }
-`;
+`
