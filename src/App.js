@@ -4,8 +4,9 @@ import { Query } from "react-apollo" // GraphQLのqueryを送信する為のコ�
 import client from "./client"
 import { SEARCH_REPOSITORIES } from "./graphql"
 
+const PER_PAGE = 5
 const DEFALUT_STATE = {
-  first: 5,
+  first: PER_PAGE,
   after: null,
   last: null,
   before: null,
@@ -15,13 +16,23 @@ const DEFALUT_STATE = {
 function App() {
   const [variables, setVariables] = useState(DEFALUT_STATE)
   const { query, first, last, before, after } = variables
-  console.log({ query })
 
   const handleChange = (event) => {
     setVariables({ ...DEFALUT_STATE, query: event.target.value }) // DEFALUT_STATEのqueryのみを更新
   }
+
   const handleSubmit = (event) => {
     event.preventDefault()
+  }
+
+  const goNext = (search) => {
+    setVariables({
+      first: PER_PAGE,
+      after: search.pageInfo.endCursor,
+      last: null,
+      before: null,
+      query: query,
+    })
   }
 
   return (
@@ -49,13 +60,20 @@ function App() {
                   const node = edge.node
                   return (
                     <li key={node.id}>
-                      <a href={node.url} target="_blank" rel="noreferrer">
+                      <a
+                        href={node.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {node.name}
                       </a>
                     </li>
                   )
                 })}
               </ul>
+              {search.pageInfo.hasNextPage ? (
+                <button onClick={() => goNext(search)}>Next</button>
+              ) : null}
             </>
           )
         }}
