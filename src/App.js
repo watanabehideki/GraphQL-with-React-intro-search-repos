@@ -4,6 +4,8 @@ import { Query } from "react-apollo" // GraphQLのqueryを送信する為のコ�
 import client from "./client"
 import { SEARCH_REPOSITORIES } from "./graphql"
 
+import { StarButton } from "./components/StarButton"
+
 const PER_PAGE = 5
 const DEFALUT_STATE = {
   first: PER_PAGE,
@@ -76,6 +78,8 @@ function App() {
                       >
                         {node.name}
                       </a>
+                      &nbsp;
+                      <StarButton node={node}/>
                     </li>
                   )
                 })}
