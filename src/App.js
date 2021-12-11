@@ -79,7 +79,7 @@ function App() {
                         {node.name}
                       </a>
                       &nbsp;
-                      <StarButton node={node}/>
+                      <StarButton node={node} {...{query, first, last, before, after}}/>
                     </li>
                   )
                 })}
